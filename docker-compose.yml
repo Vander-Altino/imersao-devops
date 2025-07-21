@@ -1,0 +1,34 @@
+# Define a versão da especificação do Docker Compose a ser usada
+version: '3.8'
+
+# Define os serviços (containers) que serão gerenciados por este arquivo
+services:
+  # Nome do serviço (você poderá subir esse container com "docker compose up api")
+  api:
+    # Instruções para construir a imagem do container a partir de um Dockerfile
+    build:
+      context: .             # Diretório onde está o Dockerfile (neste caso, o diretório atual)
+      dockerfile: Dockerfile # Nome do arquivo Dockerfile que será usado para o build
+
+    # Define o nome fixo do container (útil para evitar nomes aleatórios em cada build)
+    container_name: api
+
+    # Mapeamento de portas: "porta_do_host:porta_do_container"
+    ports:
+      - "8000:8000"  # A porta 8000 da máquina será ligada à porta 8000 do container
+
+    # Mapeamento de volume: sincroniza os arquivos do host com o container
+    volumes:
+      - .:/app  # Sincroniza o diretório atual (.) com a pasta /app dentro do container
+
+    # Comando que será executado assim que o container iniciar
+    # Ele inicia o Uvicorn, o servidor da FastAPI, em modo de recarregamento automático
+    command: [
+      "uvicorn",         # Inicia o Uvicorn
+      "app:app",         # app:app → nome_do_arquivo:nome_da_variável_FastAPI
+      "--host", "0.0.0.0",  # Faz o servidor escutar em todas as interfaces de rede
+      "--port", "8000",     # Porta usada no container
+      "--reload"            # Ativa o modo auto-reload (ideal para desenvolvimento)
+    ]
+
+
