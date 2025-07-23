@@ -68,3 +68,12 @@ Este projeto é uma API desenvolvida com FastAPI para gerenciar alunos, cursos e
 - Para reiniciar o banco, basta apagar o arquivo `escola.db` (isso apagará todos os dados).
 
 ---
+
+# 1. Autenticar no Google Cloud (abre uma URL para login)
+gcloud auth login
+
+# 2. Definir o projeto ativo (substitua pelo seu ID real do projeto)
+gcloud config set project alura-imersao-466718
+
+# 3. Fazer o deploy de um serviço com o Cloud Run (escutando na porta 8000)
+gcloud run deploy --port=8000
